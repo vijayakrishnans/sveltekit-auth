@@ -1,0 +1,19 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "tests/*"
+  - "tooling/*"
+
+# pnpm 10 blocks dependency build scripts unless allow-listed; wrangler's
+# workerd and esbuild need theirs to verify their platform binaries.
+onlyBuiltDependencies:
+  - esbuild
+  - workerd
+  - sharp
+
+# The upstream example's one override this tree still needs: SvelteKit 2
+# depends on cookie@^0.6, and 0.7.0 is the release that refuses out-of-bounds
+# characters in a cookie's name, path and domain (CVE-2024-47764). The
+# example's other overrides are floors the lockfile already resolves above.
+overrides:
+  "cookie@0": 0.7.0
